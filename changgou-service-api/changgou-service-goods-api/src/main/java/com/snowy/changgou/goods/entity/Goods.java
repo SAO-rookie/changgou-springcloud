@@ -1,8 +1,6 @@
-package com.snowy.changgou.entity;
+package com.snowy.changgou.goods.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.snowy.changgou.config;
+package com.snowy.changgou.goods.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;

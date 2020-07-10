@@ -1,8 +1,8 @@
-package com.snowy.changgou.controller;
+package com.snowy.changgou.goods.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.snowy.changgou.entity.Brand;
-import com.snowy.changgou.service.BrandService;
+import com.snowy.changgou.goods.entity.Brand;
+import com.snowy.changgou.goods.service.BrandService;
 import com.snowy.tool.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

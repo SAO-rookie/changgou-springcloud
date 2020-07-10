@@ -1,7 +1,7 @@
-package com.snowy.changgou.service;
+package com.snowy.changgou.goods.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.snowy.changgou.entity.Brand;
+import com.snowy.changgou.goods.entity.Brand;
 
 /**
  * @auther snowy

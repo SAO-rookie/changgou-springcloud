@@ -1,7 +1,7 @@
-package com.snowy.changgou.mapper;
+package com.snowy.changgou.goods.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.snowy.changgou.entity.Brand;
+import com.snowy.changgou.goods.entity.Brand;
 
 /**
  * @auther snowy

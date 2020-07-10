@@ -1,4 +1,4 @@
-package com.snowy.changgou.entity;
+package com.snowy.changgou.goods.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
