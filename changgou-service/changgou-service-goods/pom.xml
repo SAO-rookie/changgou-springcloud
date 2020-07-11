@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>changgou-service-goods</artifactId>
+    <description> 商品管理微服务 </description>
     <dependencies>
         <!-- 实体类 和 api接口-->
         <dependency>
