@@ -1,0 +1,19 @@
+server:
+  port: 8200
+spring:
+  profiles:
+    active: dev
+  application:
+    name: changgou_file
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+

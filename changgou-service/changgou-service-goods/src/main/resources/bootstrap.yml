@@ -5,6 +5,13 @@ spring:
      active: dev
    application:
      name: changgou_goods
+   cloud:
+     nacos:
+       discovery:
+         server-addr: 127.0.0.1:8848
+       config:
+         server-addr: 127.0.0.1:8848
+         file-extension: yml
    datasource:
      url: jdbc:mysql://182.92.208.221:3306/changgou_goods?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
      username: root

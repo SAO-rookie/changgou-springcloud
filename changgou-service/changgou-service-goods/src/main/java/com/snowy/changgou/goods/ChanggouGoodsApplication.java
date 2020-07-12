@@ -3,6 +3,7 @@ package com.snowy.changgou.goods;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @auther snowy
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan(value = "com.snowy.changgou.goods.mapper")
+@EnableDiscoveryClient
 public class ChanggouGoodsApplication {
     public static void main(String[] args) {
         SpringApplication.run(ChanggouGoodsApplication.class,args);
