@@ -4,13 +4,13 @@ import com.snowy.changgou.file.entity.FastDFSFile;
 import jdk.internal.dynalink.beans.StaticClass;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
-import org.csource.fastdfs.ClientGlobal;
-import org.csource.fastdfs.StorageClient;
-import org.csource.fastdfs.TrackerClient;
-import org.csource.fastdfs.TrackerServer;
+import org.csource.fastdfs.*;
 import org.springframework.core.io.ClassPathResource;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @auther snowy
@@ -67,5 +67,72 @@ public class FastDFSUntil {
         }
         return uploadResults;
     }
+
+    /***
+     * 获取文件信息
+     * @param groupName:组名
+     * @param remoteFileName：文件存储完整名
+     */
+    public static FileInfo getFileInfo(String groupName,String remoteFileName) {
+        try {
+            FileInfo file_info = getStorageClient().get_file_info(groupName, remoteFileName);
+            return file_info;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return null;
+    }
+
+
+    /***
+     * 文件下载
+     * @param groupName:组名
+     * @param remoteFileName：文件存储完整名
+     * @return
+     */
+    public static InputStream downFile(String groupName,String remoteFileName){
+        try {
+            byte[] bytes = getStorageClient().download_file(groupName, remoteFileName);
+            return new ByteArrayInputStream(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /***
+     * 文件删除实现
+     * @param groupName:组名
+     * @param remoteFileName：文件存储完整名
+     */
+
+    public static boolean deleteFile(String groupName,String remoteFileName){
+        try {
+            int i = getStorageClient().delete_file(groupName, remoteFileName);
+            return i>0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return false;
+    }
+
+    /***
+     * 获取组信息
+     * @param groupName :组名
+     */
+    public static StorageServer getStorages(String groupName){
+
+        try {
+            TrackerClient trackerClient = new TrackerClient();
+            TrackerServer trackerServer = trackerClient.getConnection();
+            return   trackerClient.getStoreStorage(trackerServer,groupName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 }
 
