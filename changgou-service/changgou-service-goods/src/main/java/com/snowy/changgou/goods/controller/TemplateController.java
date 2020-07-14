@@ -7,8 +7,7 @@ import com.snowy.changgou.goods.entity.Template;
 import com.snowy.changgou.goods.service.TemplateService;
 import com.snowy.tool.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
@@ -49,6 +48,40 @@ public class TemplateController {
     @GetMapping("/getAllCondition")
     public Result getAllCondition(Template template){
         return Result.ok(templateService.list( Wrappers.query(template)));
+    }
+
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/14
+     * @Param: [template]
+     * @return: com.snowy.tool.Result
+     */
+    @PostMapping
+    public Result save(@RequestBody Template template){
+        return Result.ok(templateService.save(template));
+    }
+
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/14
+     * @Param: [template]
+     * @return: com.snowy.tool.Result
+     */
+    @PutMapping
+    public Result updateById(@RequestBody Template template){
+        return Result.ok(templateService.updateById(template));
+    }
+
+
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/14
+     * @Param: [id]
+     * @return: com.snowy.tool.Result
+     */
+    @DeleteMapping("/{id}")
+    public Result deleteById(@PathVariable Integer id){
+        return Result.ok(templateService.removeById(id));
     }
 
 }
