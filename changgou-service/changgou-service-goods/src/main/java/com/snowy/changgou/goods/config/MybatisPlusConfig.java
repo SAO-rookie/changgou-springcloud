@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //Spring boot方式
 @EnableTransactionManagement //开启事务
 @Configuration
-@MapperScan("com.snowy.changgou.mapper")
+@MapperScan("com.snowy.changgou.goods.mapper")
 public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
