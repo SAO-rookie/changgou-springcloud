@@ -1,75 +1,44 @@
 package com.snowy.changgou.goods.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-/****
- * @Author:admin
- * @Description:Template构建
- * @Date 2019/6/14 19:13
- *****/
-@ApiModel(description = "Template",value = "Template")
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author DmZ
+ * @since 2020-07-14
+ */
 @TableName("tb_template")
-public class Template implements Serializable{
+@Data
+public class Template implements Serializable {
 
-	@ApiModelProperty(value = "ID",required = false)
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-	@TableId
-	private Integer id;//ID
-	@ApiModelProperty(value = "模板名称",required = false)
-    @Column(name = "name")
-	private String name;//模板名称
-	@ApiModelProperty(value = "规格数量",required = false)
-    @Column(name = "spec_num")
-	private Integer specNum;//规格数量
-	@ApiModelProperty(value = "参数数量",required = false)
-    @Column(name = "para_num")
-	private Integer paraNum;//参数数量
+    private static final long serialVersionUID=1L;
 
+    /**
+     * ID
+     */
+      @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-	//get方法
-	public Integer getId() {
-		return id;
-	}
+    /**
+     * 模板名称
+     */
+    private String name;
 
-	//set方法
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	//get方法
-	public String getName() {
-		return name;
-	}
+    /**
+     * 规格数量
+     */
+    private Integer specNum;
 
-	//set方法
-	public void setName(String name) {
-		this.name = name;
-	}
-	//get方法
-	public Integer getSpecNum() {
-		return specNum;
-	}
-
-	//set方法
-	public void setSpecNum(Integer specNum) {
-		this.specNum = specNum;
-	}
-	//get方法
-	public Integer getParaNum() {
-		return paraNum;
-	}
-
-	//set方法
-	public void setParaNum(Integer paraNum) {
-		this.paraNum = paraNum;
-	}
-
-
+    /**
+     * 参数数量
+     */
+    private Integer paraNum;
 }

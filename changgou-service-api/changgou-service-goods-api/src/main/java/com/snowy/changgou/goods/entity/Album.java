@@ -1,71 +1,45 @@
 package com.snowy.changgou.goods.entity;
 
-
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-/****
- * @Author:admin
- * @Description:Album构建
- * @Date 2019/6/14 19:13
- *****/
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author DmZ
+ * @since 2020-07-14
+ */
 @TableName("tb_album")
-public class Album implements Serializable{
+@Data
+public class Album implements Serializable {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-	@TableId
-	private Long id;//编号
+    private static final long serialVersionUID=1L;
 
+    /**
+     * 编号
+     */
+      @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
-    @Column(name = "title")
-	private String title;//相册名称
-    @Column(name = "image")
-	private String image;//相册封面
-    @Column(name = "image_items")
-	private String imageItems;//图片列表
+    /**
+     * 相册名称
+     */
+    private String title;
 
+    /**
+     * 相册封面
+     */
+    private String image;
 
-	//get方法
-	public Long getId() {
-		return id;
-	}
-
-	//set方法
-	public void setId(Long id) {
-		this.id = id;
-	}
-	//get方法
-	public String getTitle() {
-		return title;
-	}
-
-	//set方法
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	//get方法
-	public String getImage() {
-		return image;
-	}
-
-	//set方法
-	public void setImage(String image) {
-		this.image = image;
-	}
-	//get方法
-	public String getImageItems() {
-		return imageItems;
-	}
-
-	//set方法
-	public void setImageItems(String imageItems) {
-		this.imageItems = imageItems;
-	}
-
+    /**
+     * 图片列表
+     */
+    private String imageItems;
 
 }

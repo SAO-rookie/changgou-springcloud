@@ -26,7 +26,7 @@ public class BrandController {
      * @return: com.snowy.tool.Result
      */
     @GetMapping("/page")
-    public Result getAll(Page <Brand> page){
+    public Result getAll(Page < Brand > page){
         return Result.ok(brandService.page(page));
     }
 

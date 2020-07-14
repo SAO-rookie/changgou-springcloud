@@ -1,52 +1,35 @@
 package com.snowy.changgou.goods.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
-/****
- * @Author:admin
- * @Description:CategoryBrand构建
- * @Date 2019/6/14 19:13
- *****/
-@ApiModel(description = "CategoryBrand",value = "CategoryBrand")
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author DmZ
+ * @since 2020-07-14
+ */
 @TableName("tb_category_brand")
-public class CategoryBrand implements Serializable{
+@Data
+public class CategoryBrand implements Serializable {
 
-	@ApiModelProperty(value = "分类ID",required = false)
-	@Id
-    @Column(name = "category_id")
+    private static final long serialVersionUID=1L;
 
-	private Integer categoryId;//分类ID
-	@ApiModelProperty(value = "品牌ID",required = false)
-	@Id
-	@Column(name = "brand_id")
-	private Integer brandId;//品牌ID
+    /**
+     * 分类ID
+     */
+      @TableId(value = "category_id", type = IdType.AUTO)
+    private Integer categoryId;
 
-
-	//get方法
-	public Integer getCategoryId() {
-		return categoryId;
-	}
-
-	//set方法
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
-	}
-	//get方法
-	public Integer getBrandId() {
-		return brandId;
-	}
-
-	//set方法
-	public void setBrandId(Integer brandId) {
-		this.brandId = brandId;
-	}
-
+    /**
+     * 品牌ID
+     */
+    private Integer brandId;
 
 }
