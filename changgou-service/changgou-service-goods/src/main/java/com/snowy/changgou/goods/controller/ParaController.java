@@ -27,103 +27,101 @@ import java.util.List;
 public class ParaController {
     @Autowired
     private ParaService paraService;
-/*
-    *//***
-     * Para分页条件搜索实现
-     * @param para
-     * @param page
-     * @param size
-     * @return
-     *//*
-    @PostMapping(value = "/search/{page}/{size}" )
-    public Result findPage(@RequestBody(required = false)  Para para, @PathVariable  int page, @PathVariable  int size){
-        Page < Para > paraPage = new Page <>();
-        paraService.page(paraPage, Wrappers.query(para));
-        return Result.ok(true,StatusCode.OK,"查询成功",pageInfo);
+
+    //Para分页条件搜索实现
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/20
+     * @Param: [page, para]
+     * @return: com.snowy.tool.Result
+     */
+    @PostMapping(value = "/page/condition" )
+    public Result findPage(Page page ,Para para){
+        return Result.ok(paraService.page(page,Wrappers.query(para)));
     }
 
-    *//***
-     * Para分页搜索实现
-     * @param page:当前页
-     * @param size:每页显示多少条
-     * @return
-     *//*
+
+     /*//Para分页搜索实现
+
     @GetMapping(value = "/search/{page}/{size}" )
-    public Result<PageInfo> findPage(@PathVariable  int page, @PathVariable  int size){
+    public Result findPage(@PathVariable  int page, @PathVariable  int size){
         //分页查询
         PageInfo<Para> pageInfo = paraService.findPage(page, size);
         return new Result<PageInfo>(true,StatusCode.OK,"查询成功",pageInfo);
+    }*/
+
+
+     //多条件搜索品牌数据无分页
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/20
+     * @Param: [para]
+     * @return: com.snowy.tool.Result
+     */
+    @PostMapping(value = "/list" )
+    public Result findList(Para para){
+        return Result.ok(paraService.list(Wrappers.query(para)));
     }
 
-    *//***
-     * 多条件搜索品牌数据
-     * @param para
-     * @return
-     *//*
-    @PostMapping(value = "/search" )
-    public Result<List<Para>> findList(@RequestBody(required = false)  Para para){
-        List<Para> list = paraService.findList(para);
-        return new Result<List<Para>>(true,StatusCode.OK,"查询成功",list);
-    }
 
-    *//***
-     * 根据ID删除品牌数据
-     * @param id
-     * @return
-     *//*
+     //根据ID删除品牌数据
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/20
+     * @Param: [id]
+     * @return: com.snowy.tool.Result
+     */
     @DeleteMapping(value = "/{id}" )
     public Result delete(@PathVariable Integer id){
-        paraService.delete(id);
-        return new Result(true,StatusCode.OK,"删除成功");
+        return  Result.ok(paraService.removeById(id));
     }
 
-    *//***
-     * 修改Para数据
-     * @param para
-     * @param id
-     * @return
-     *//*
-    @PutMapping(value="/{id}")
-    public Result update(@RequestBody  Para para,@PathVariable Integer id){
-        //设置主键值
-        para.setId(id);
-        //修改数据
-        paraService.update(para);
-        return new Result(true,StatusCode.OK,"修改成功");
+
+     //修改Para数据
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/20
+     * @Param: [para, id]
+     * @return: com.snowy.tool.Result
+     */
+    @PutMapping
+    public Result update(@RequestBody  Para para){
+        return  Result.ok(paraService.updateById(para));
     }
 
-    *//***
-     * 新增Para数据
-     * @param para
-     * @return
-     *//*
+
+    //新增Para数据
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/20
+     * @Param: [para]
+     * @return: com.snowy.tool.Result
+     */
     @PostMapping
     public Result add(@RequestBody   Para para){
-        paraService.add(para);
-        return new Result(true,StatusCode.OK,"添加成功");
+        return  Result.ok(paraService.save(para));
     }
 
-    *//***
-     * 根据ID查询Para数据
-     * @param id
-     * @return
-     *//*
+
+     ///根据ID查询Para数据
+    /**
+     * @Author: snowy
+     * @Date: 2020/7/20
+     * @Param: [id]
+     * @return: com.snowy.tool.Result
+     */
     @GetMapping("/{id}")
-    public Result < Para > findById(@PathVariable Integer id){
-        //根据ID查询
-        Para para = paraService.findById(id);
-        return new Result<Para>(true, StatusCode.OK,"查询成功",para);
+    public Result  findById(@PathVariable Integer id){
+        return  Result.ok(paraService.getById(id));
     }
 
-    *//***
-     * 查询Para全部数据
-     * @return
-     *//*
+
+     //查询Para全部数据
+
     @GetMapping
-    public Result<Para> findAll(){
-        List <Para> list = paraService.findAll();
-        return new Result<Para>(true, StatusCode.OK,"查询成功",list) ;
-    }*/
+    public Result findAll(){
+        return  Result.ok(paraService.list());
+    }
 
 }
 
