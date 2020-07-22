@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snowy.changgou.goods.mapper.BrandMapper">
+    <resultMap id="BrandOne" type="com.snowy.changgou.goods.entity.Brand">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="image" column="image"/>
+        <result property="letter" column="letter"/>
+        <result property="seq" column="seq"/>
+    </resultMap>
+    <select id="findByCategory" resultMap="BrandOne">
+        SELECT
+        tb.id,
+        tb.name,
+        tb.image,
+        tb.letter,
+        tb.seq
+        FROM tb_category_brand tcb
+        left  join  tb_brand tb
+        on tb.id=tcb.brand_id
+        WHERE tcb.category_id=#{categoryid}
+    </select>
+</mapper>

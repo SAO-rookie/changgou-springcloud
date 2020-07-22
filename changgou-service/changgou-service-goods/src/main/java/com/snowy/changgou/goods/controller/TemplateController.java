@@ -21,7 +21,7 @@ import java.sql.Wrapper;
  * @author DmZ
  * @since 2020-07-14
  */
-@Controller
+@RestController
 @RequestMapping("/template")
 public class TemplateController {
     @Autowired
@@ -84,5 +84,9 @@ public class TemplateController {
         return Result.ok(templateService.removeById(id));
     }
 
+    @GetMapping("/category/{id}")
+    public Result getTemplateByCategoryId(@PathVariable Integer id){
+        return Result.ok(templateService.findByCategoryId(id));
+    }
 }
 

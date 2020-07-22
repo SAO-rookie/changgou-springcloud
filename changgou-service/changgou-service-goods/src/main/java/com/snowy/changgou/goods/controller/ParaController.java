@@ -22,7 +22,7 @@ import java.util.List;
  * @author DmZ
  * @since 2020-07-14
  */
-@Controller
+@RestController
 @RequestMapping("/para")
 public class ParaController {
     @Autowired

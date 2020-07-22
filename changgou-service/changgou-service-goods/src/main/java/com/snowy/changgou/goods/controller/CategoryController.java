@@ -22,7 +22,7 @@ import java.util.List;
  * @author DmZ
  * @since 2020-07-14
  */
-@Controller
+@RestController
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
@@ -54,10 +54,17 @@ public class CategoryController {
         return Result.ok(categoryService.list());
     }
 
+    /**
+     * 查询父节点
+     * @Author: snowy
+     * @Date: 2020/7/21
+     * @Param: [pid]
+     * @return: com.snowy.tool.Result
+     */
     @GetMapping(value ="/list/{pid}")
     public Result findByPrantId(@PathVariable(value = "pid")Integer pid){
         QueryWrapper < Category > wrapper = new QueryWrapper <>();
-        wrapper.eq("",pid);
+        wrapper.eq("parent_id",pid);
         return Result.ok(categoryService.list(wrapper));
     }
     @PutMapping

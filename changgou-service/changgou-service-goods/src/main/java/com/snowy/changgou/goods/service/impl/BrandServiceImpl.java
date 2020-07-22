@@ -4,7 +4,10 @@ import com.snowy.changgou.goods.entity.Brand;
 import com.snowy.changgou.goods.mapper.BrandMapper;
 import com.snowy.changgou.goods.service.BrandService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements BrandService {
 
+    @Autowired
+    private  BrandMapper brandMapper;
+    @Override
+    public List < Brand > findByCategory(Integer categoryid) {
+        return brandMapper.findByCategory(categoryid);
+    }
 }

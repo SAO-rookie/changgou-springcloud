@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.snowy.changgou.goods.entity.Brand;
 import com.snowy.changgou.goods.service.BrandService;
 import com.snowy.tool.Result;
+import com.snowy.tool.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @auther snowy
@@ -76,6 +79,17 @@ public class BrandController {
     @DeleteMapping("/{id}")
     public Result removeById(@PathVariable Integer id){
         return Result.ok(brandService.removeById(id));
+    }
+
+    /***
+     * 根据分类实现品牌列表查询
+     * /brand/category/{id}  分类ID
+     */
+    @GetMapping(value = "/category/{categoryId}")
+    public Result findBrandByCategory(@PathVariable(value = "categoryId")Integer categoryId){
+        //调用Service查询品牌数据
+        List<Brand> categoryList = brandService.findByCategory(categoryId);
+        return  Result.ok(categoryList);
     }
 
 }

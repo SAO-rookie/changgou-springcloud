@@ -23,7 +23,7 @@ import java.util.List;
  * @author DmZ
  * @since 2020-07-14
  */
-@Controller
+@RestController
 @RequestMapping("/spec")
 public class SpecController {
 
@@ -37,12 +37,9 @@ public class SpecController {
      * @Param: [page, spec]
      * @return: com.snowy.tool.Result
      */
-    @GetMapping(value = "/search/{page}/{size}" )
-    public Result getAllPageAndCondition(@RequestBody(required = false) Spec spec, @PathVariable int page, @PathVariable  int size){
-        Page < Spec > specPage = new Page <>();
-        specPage.setCurrent(page);
-        specPage.setSize(size);
-        return Result.ok(specService.page(specPage, Wrappers.query(spec)));
+    @GetMapping(value = "/pageCondition" )
+    public Result getAllPageAndCondition(Spec spec,Page page){
+        return Result.ok(specService.page(page, Wrappers.query(spec)));
     }
 
     /**
@@ -52,12 +49,9 @@ public class SpecController {
      * @Param: [page]
      * @return: com.snowy.tool.Result
      */
-    @GetMapping(value = "/search/{page}/{size}" )
-    public Result getAllPage(@PathVariable  int page, @PathVariable  int size){
-        Page < Spec > specPage = new Page <>();
-        specPage.setCurrent(page);
-        specPage.setSize(size);
-        return Result.ok(specService.page(specPage));
+    @GetMapping(value = "/search" )
+    public Result getAllPage(Page page){
+        return Result.ok(specService.page(page));
     }
 
 
@@ -68,7 +62,7 @@ public class SpecController {
      * @Param: [spec]
      * @return: com.snowy.tool.Result
      */
-    @PostMapping(value = "/search" )
+    @PostMapping(value = "/searchCondition" )
     public Result getgetAllCondition(Spec spec){
         return Result.ok(specService.list(Wrappers.query(spec)));
     }
@@ -100,7 +94,7 @@ public class SpecController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Spec> findById(@PathVariable Integer id){
+    public Result getById(@PathVariable Integer id){
         //根据ID查询
         return  Result.ok(specService.getById(id));
     }
@@ -111,7 +105,7 @@ public class SpecController {
      * @Param: [spec]
      * @return: com.snowy.tool.Result
      */
-    @PutMapping(value="/{id}")
+    @PutMapping
     public Result update(@RequestBody  Spec spec){
         return Result.ok(specService.updateById(spec));
     }
