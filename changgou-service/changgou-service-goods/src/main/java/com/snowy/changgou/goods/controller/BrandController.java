@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2020/7/9 - 22:24
  */
 @RestController
-@RequestMapping("/brand")
+    @RequestMapping("/brand")
 public class BrandController {
 
     @Autowired

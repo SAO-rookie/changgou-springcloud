@@ -1,5 +1,6 @@
 package com.snowy.changgou.goods.service;
 
+import com.snowy.changgou.goods.entity.Goods;
 import com.snowy.changgou.goods.entity.Spu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-07-14
  */
 public interface SpuService extends IService<Spu> {
-
+    boolean saveGoods(Goods goods);
 }

@@ -25,7 +25,7 @@ public class Sku implements Serializable {
     /**
      * 商品id
      */
-      @TableId(value = "id", type = IdType.AUTO)
+      @TableId(value = "id", type = IdType.INPUT)
     private String id;
 
     /**
