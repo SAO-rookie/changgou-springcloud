@@ -1,5 +1,6 @@
 package com.snowy.changgou.goods.service.impl;
 
+import cn.hutool.core.lang.copier.Copier;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -90,19 +92,102 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
     @Override
     public Goods getGoods(String spuId) {
         Spu spu = spuMapper.selectById(spuId);
-        QueryWrapper < Sku > wrapper = new QueryWrapper <>();
-        List < Sku > skus = skuMapper.selectList(wrapper.lambda().eq(Sku::getSpuId, spuId));
+        List < Sku > skus = skuMapper.selectList(Wrappers.<Sku>lambdaQuery().eq(Sku::getSpuId, spuId));
         return Goods.getInstance(spu,skus);
     }
 
     @Override
     public boolean updateStock(Goods goods) {
         List < Sku > skuList = goods.getSkuList();
-        QueryWrapper < Sku > wrapper = new QueryWrapper <>();
         skuList.forEach(s->{
-            skuMapper.update(s, wrapper.lambda().select(Sku::getNum).eq(Sku::getSpuId,goods.getSpu().getId()));
+            skuMapper.update(s, Wrappers.<Sku>lambdaQuery().select(Sku::getNum).eq(Sku::getSpuId,goods.getSpu().getId()));
         });
         return true;
+    }
+
+    @Override
+    public boolean goodsListingAndReviewById(String spuId) {
+        Spu spu = spuMapper.selectById(spuId);
+        if (spu.getIsDelete().equalsIgnoreCase("1")){
+            return false;
+        }
+        spu.setStatus("1");
+        spu.setIsMarketable("1");
+        return  spuMapper.update(spu,Wrappers.<Spu>lambdaQuery().eq(Spu::getId,spuId))>0;
+    }
+
+    @Override
+    public boolean goodsPullById(String spuId) {
+        Spu spu = spuMapper.selectById(spuId);
+        if (spu.getIsDelete().equalsIgnoreCase("1")){
+            return false;
+        }
+        spu.setIsMarketable("0");
+        return  spuMapper.update(spu,Wrappers.<Spu>lambdaQuery().eq(Spu::getId,spuId))>0;
+    }
+
+    @Override
+    public boolean goodsOnTheShelfById(String spuId) {
+        Spu spu = spuMapper.selectById(spuId);
+        if (spu.getIsDelete().equalsIgnoreCase("1")){
+            return false;
+        }else if (spu.getStatus().equalsIgnoreCase("1")){
+            return false;
+        }
+        spu.setIsMarketable("1");
+        return spuMapper.update(spu,Wrappers.<Spu>lambdaQuery().eq(Spu::getId,spuId))>0;
+    }
+
+    @Override
+    public boolean listPullByIds(String[] spuIds) {
+        List < Spu > spus = spuMapper.selectBatchIds(Arrays.asList(spuIds));
+        spus.forEach(s->{
+            s.setIsMarketable("1");
+            spuMapper.update(s,
+                    Wrappers.<Spu>lambdaQuery()
+                            .select(Spu::getIsMarketable)
+                            .eq(Spu::getIsDelete,"0")
+                            .eq(Spu::getStatus,"1")
+                            .eq(Spu::getIsMarketable,"0")
+                            );
+        });
+        return true;
+    }
+
+    @Override
+    public boolean listOnTheShelfByIds(String[] spuIds) {
+        List < Spu > spus = spuMapper.selectBatchIds(Arrays.asList(spuIds));
+        spus.forEach(s->{
+            s.setIsMarketable("0");
+            spuMapper.update(s,
+                    Wrappers.<Spu>lambdaQuery()
+                            .select(Spu::getIsMarketable)
+                            .eq(Spu::getIsDelete,"0")
+                            .eq(Spu::getStatus,"1")
+                            .eq(Spu::getIsMarketable,"1")
+                            );
+        });
+        return true;
+    }
+
+    @Override
+    public boolean removeGoodsById(String spuId) {
+        Spu spu = new Spu();
+        spu.setIsDelete("1");
+        spu.setStatus("0");
+        return spuMapper.update(spu,Wrappers.<Spu>lambdaQuery()
+                .eq(Spu::getId,spuId)
+                .eq(Spu::getIsMarketable,"0"))>0;
+    }
+
+    @Override
+    public boolean restoreGoodById(String spuId) {
+        Spu spu = new Spu();
+        spu.setIsDelete("0");
+        spu.setStatus("0");
+        return spuMapper.update(spu,Wrappers.<Spu>lambdaQuery()
+                .eq(Spu::getId,spuId)
+                .eq(Spu::getIsMarketable,"1"))>0;
     }
 
 

@@ -18,4 +18,18 @@ public interface SpuService extends IService<Spu> {
     Goods getGoods(String spuId);
 
     boolean updateStock(Goods goods);
+
+    boolean goodsListingAndReviewById(String spuId);
+
+    boolean goodsPullById(String spuId);
+
+    boolean goodsOnTheShelfById(String spuId);
+
+    boolean listPullByIds(String[] spuIds);
+
+    boolean listOnTheShelfByIds(String[] spuIds);
+
+    boolean removeGoodsById(String spuId);
+
+    boolean restoreGoodById(String spuId);
 }
