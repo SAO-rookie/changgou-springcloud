@@ -2,6 +2,8 @@ package com.snowy.changgou.goods.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.snowy.changgou.goods.entity.*;
 import com.snowy.changgou.goods.mapper.BrandMapper;
 import com.snowy.changgou.goods.mapper.CategoryMapper;
@@ -42,10 +44,18 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
 
     @Override
     public boolean saveGoods(Goods goods) {
-        //增加Spu
         Spu spu = goods.getSpu();
-        spu.setId(String.valueOf(idWorker.nextId()));
-        spuMapper.insert(spu);
+        // 修改或增加Spu
+        if (StrUtil.isEmpty(spu.getId())){
+            // 增加
+            spu.setId(String.valueOf(idWorker.nextId()));
+            spuMapper.insert(spu);
+        }else {
+            // 修改
+            spuMapper.updateById(spu);
+            QueryWrapper < Sku > wrapper = new QueryWrapper <>();
+            skuMapper.delete(wrapper.lambda().eq(Sku::getSpuId,spu.getId()));
+        }
         //增加Sku
         Category category = categoryMapper.selectById(spu.getCategory3Id());
         Brand brand = brandMapper.selectById(spu.getBrandId());
@@ -76,4 +86,24 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
         });
         return true;
     }
+
+    @Override
+    public Goods getGoods(String spuId) {
+        Spu spu = spuMapper.selectById(spuId);
+        QueryWrapper < Sku > wrapper = new QueryWrapper <>();
+        List < Sku > skus = skuMapper.selectList(wrapper.lambda().eq(Sku::getSpuId, spuId));
+        return Goods.getInstance(spu,skus);
+    }
+
+    @Override
+    public boolean updateStock(Goods goods) {
+        List < Sku > skuList = goods.getSkuList();
+        QueryWrapper < Sku > wrapper = new QueryWrapper <>();
+        skuList.forEach(s->{
+            skuMapper.update(s, wrapper.lambda().select(Sku::getNum).eq(Sku::getSpuId,goods.getSpu().getId()));
+        });
+        return true;
+    }
+
+
 }

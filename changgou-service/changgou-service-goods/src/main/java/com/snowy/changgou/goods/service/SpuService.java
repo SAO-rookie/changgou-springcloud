@@ -14,4 +14,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SpuService extends IService<Spu> {
     boolean saveGoods(Goods goods);
+    
+    Goods getGoods(String spuId);
+
+    boolean updateStock(Goods goods);
 }
