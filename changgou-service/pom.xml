@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <description>畅购商城 微服务</description>
     <modules>
+        <module>changgou-service-canal</module>
         <module>changgou-service-goods</module>
         <module>changgou-service-file</module>
     </modules>

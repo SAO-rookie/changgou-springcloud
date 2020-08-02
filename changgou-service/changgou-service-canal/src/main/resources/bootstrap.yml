@@ -1,0 +1,32 @@
+server:
+  port: 8300
+spring:
+  application:
+    name: changgou-canal
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+feign:
+  hystrix:
+    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+#canal配置
+canal:
+  client:
+    instances:
+      example:
+        host: 127.0.0.1
+        port: 11111
