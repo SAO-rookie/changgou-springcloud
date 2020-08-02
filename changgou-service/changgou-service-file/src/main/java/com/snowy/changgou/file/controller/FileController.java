@@ -2,7 +2,7 @@ package com.snowy.changgou.file.controller;
 
 import com.snowy.changgou.file.entity.FastDFSFile;
 import com.snowy.changgou.file.until.FastDFSUntil;
-import com.snowy.tool.Result;
+import com.snowy.changgou.content.tool.Result;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

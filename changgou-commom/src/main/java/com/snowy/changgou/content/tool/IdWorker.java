@@ -1,4 +1,4 @@
-package com.snowy.tool;
+package com.snowy.changgou.content.tool;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;

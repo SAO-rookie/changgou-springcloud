@@ -1,4 +1,4 @@
-package com.snowy.tool;
+package com.snowy.changgou.content.tool;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;

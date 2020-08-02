@@ -1,4 +1,4 @@
-package com.snowy.canalListen;
+package com.snowy.changgou.canal.canalListen;
 
 import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.xpand.starter.canal.annotation.CanalEventListener;
@@ -37,8 +37,9 @@ public class CanalDataEventListener {
     @UpdateListenPoint
     public void onEvenUpdate(CanalEntry.RowData rowData){
         System.out.println("修改监控");
-        rowData.getAfterColumnsList().stream().map(c->c.getName()).forEach(System.out::println);
-        rowData.getAfterColumnsList().stream().map(c->c.getValue()).forEach(System.out::println);
+        rowData.getAfterColumnsList().stream().map(c->c.getName()).forEach(System.out::print);
+        System.out.println();
+        rowData.getAfterColumnsList().stream().map(c->c.getValue()).forEach(System.out::print);
     }
 
     /*
@@ -49,10 +50,10 @@ public class CanalDataEventListener {
      * @Return: void
      **/
     @DeleteListenPoint
-    public void onEvent3(CanalEntry.EventType eventType, CanalEntry.RowData rowData) {
+    public void onEventDelete(CanalEntry.EventType eventType, CanalEntry.RowData rowData) {
         System.out.println("删除监控");
-        rowData.getAfterColumnsList().stream().map(c->c.getName()).forEach(System.out::println);
-        rowData.getAfterColumnsList().stream().map(c->c.getValue()).forEach(System.out::println);
+        rowData.getBeforeColumnsList().stream().map(c->c.getName()).forEach(System.out::print);
+        System.out.println();
+        rowData.getBeforeColumnsList().stream().map(c->c.getValue()).forEach(System.out::print);
     }
-
 }

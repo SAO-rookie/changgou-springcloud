@@ -11,6 +11,7 @@
     <description>畅购商城 实体类和api</description>
     <modules>
         <module>changgou-service-goods-api</module>
+        <module>changgou-service-content-api</module>
     </modules>
     <packaging>pom</packaging>
     <artifactId>changgou-service-api</artifactId>

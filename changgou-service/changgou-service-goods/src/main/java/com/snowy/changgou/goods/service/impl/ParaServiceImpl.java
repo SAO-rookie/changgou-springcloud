@@ -1,8 +1,8 @@
 package com.snowy.changgou.goods.service.impl;
 
+import com.snowy.changgou.goods.service.ParaService;
 import com.snowy.changgou.goods.entity.Para;
 import com.snowy.changgou.goods.mapper.ParaMapper;
-import com.snowy.changgou.goods.service.ParaService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

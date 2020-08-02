@@ -1,10 +1,10 @@
 package com.snowy.changgou.goods.service.impl;
 
+import com.snowy.changgou.goods.service.TemplateService;
 import com.snowy.changgou.goods.entity.Category;
 import com.snowy.changgou.goods.entity.Template;
 import com.snowy.changgou.goods.mapper.CategoryMapper;
 import com.snowy.changgou.goods.mapper.TemplateMapper;
-import com.snowy.changgou.goods.service.TemplateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

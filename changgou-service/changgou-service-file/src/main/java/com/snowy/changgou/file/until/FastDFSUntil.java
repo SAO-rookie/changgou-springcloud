@@ -1,13 +1,11 @@
 package com.snowy.changgou.file.until;
 
 import com.snowy.changgou.file.entity.FastDFSFile;
-import jdk.internal.dynalink.beans.StaticClass;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,23 +1,20 @@
 package com.snowy.changgou.goods.service.impl;
 
-import cn.hutool.core.lang.copier.Copier;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.snowy.changgou.goods.service.SpuService;
 import com.snowy.changgou.goods.entity.*;
 import com.snowy.changgou.goods.mapper.BrandMapper;
 import com.snowy.changgou.goods.mapper.CategoryMapper;
 import com.snowy.changgou.goods.mapper.SkuMapper;
 import com.snowy.changgou.goods.mapper.SpuMapper;
-import com.snowy.changgou.goods.service.SpuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.snowy.tool.IdWorker;
+import com.snowy.changgou.content.tool.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +52,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
         }else {
             // 修改
             spuMapper.updateById(spu);
-            QueryWrapper < Sku > wrapper = new QueryWrapper <>();
+            QueryWrapper <Sku> wrapper = new QueryWrapper <>();
             skuMapper.delete(wrapper.lambda().eq(Sku::getSpuId,spu.getId()));
         }
         //增加Sku

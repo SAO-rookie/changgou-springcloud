@@ -3,17 +3,11 @@ package com.snowy.changgou.goods.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.snowy.changgou.goods.entity.Para;
-import com.snowy.changgou.goods.entity.Spec;
 import com.snowy.changgou.goods.service.SpecService;
-import com.snowy.tool.Result;
-import com.snowy.tool.StatusCode;
+import com.snowy.changgou.goods.entity.Spec;
+import com.snowy.changgou.content.tool.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.stereotype.Controller;
-
-import java.util.List;
 
 /**
  * <p>

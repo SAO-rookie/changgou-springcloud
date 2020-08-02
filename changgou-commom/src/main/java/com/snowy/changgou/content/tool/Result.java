@@ -1,4 +1,4 @@
-package com.snowy.tool;
+package com.snowy.changgou.content.tool;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package com.snowy.tool;
+package com.snowy.changgou.content.tool;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

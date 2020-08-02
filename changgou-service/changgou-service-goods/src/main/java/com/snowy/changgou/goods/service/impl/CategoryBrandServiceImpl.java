@@ -1,8 +1,8 @@
 package com.snowy.changgou.goods.service.impl;
 
+import com.snowy.changgou.goods.service.CategoryBrandService;
 import com.snowy.changgou.goods.entity.CategoryBrand;
 import com.snowy.changgou.goods.mapper.CategoryBrandMapper;
-import com.snowy.changgou.goods.service.CategoryBrandService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

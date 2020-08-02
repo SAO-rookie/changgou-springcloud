@@ -1,8 +1,8 @@
 package com.snowy.changgou.goods.service.impl;
 
+import com.snowy.changgou.goods.service.PrefService;
 import com.snowy.changgou.goods.entity.Pref;
 import com.snowy.changgou.goods.mapper.PrefMapper;
-import com.snowy.changgou.goods.service.PrefService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

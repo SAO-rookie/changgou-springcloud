@@ -1,4 +1,4 @@
-package com.snowy;
+package com.snowy.changgou.canal;
 
 import com.xpand.starter.canal.annotation.EnableCanalClient;
 import org.springframework.boot.SpringApplication;
@@ -9,8 +9,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableCanalClient
 @EnableDiscoveryClient
-public class CanalApplication {
+public class ChanggouCanalApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CanalApplication.class,args);
+        SpringApplication.run(ChanggouCanalApplication.class,args);
     }
 }
