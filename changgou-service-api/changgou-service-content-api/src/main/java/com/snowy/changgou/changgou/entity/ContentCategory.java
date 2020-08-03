@@ -1,4 +1,4 @@
-package com.snowy.changgou.changgou.content;
+package com.snowy.changgou.changgou.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
