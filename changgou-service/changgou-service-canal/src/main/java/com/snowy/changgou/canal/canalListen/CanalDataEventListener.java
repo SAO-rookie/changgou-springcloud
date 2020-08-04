@@ -21,12 +21,12 @@ public class CanalDataEventListener {
      * @Param:[entryType, rowData]
      * @Return: void
      **/
-    @InsertListenPoint
+   /* @InsertListenPoint
     public void onEvenInsert(CanalEntry.EventType eventType,CanalEntry.RowData rowData){
         rowData.getAfterColumnsList().stream().forEach(c->{
             System.out.println("By--Annotation: " + c.getName() + " ::   " + c.getValue());
         });
-    }
+    }*/
     /*
      * @Description 修改监控
      * @Author: snowy
@@ -34,14 +34,14 @@ public class CanalDataEventListener {
      * @Param:[rowData]
      * @Return: void
      **/
-    @UpdateListenPoint
+   /* @UpdateListenPoint
     public void onEvenUpdate(CanalEntry.RowData rowData){
         System.out.println("修改监控");
         rowData.getAfterColumnsList().stream().map(c->c.getName()).forEach(System.out::print);
         System.out.println();
         rowData.getAfterColumnsList().stream().map(c->c.getValue()).forEach(System.out::print);
     }
-
+*/
     /*
      * @Description 删除监控
      * @Author: snowy
@@ -49,11 +49,11 @@ public class CanalDataEventListener {
      * @Param:[eventType, rowData]
      * @Return: void
      **/
-    @DeleteListenPoint
+    /*@DeleteListenPoint
     public void onEventDelete(CanalEntry.EventType eventType, CanalEntry.RowData rowData) {
         System.out.println("删除监控");
         rowData.getBeforeColumnsList().stream().map(c->c.getName()).forEach(System.out::print);
         System.out.println();
         rowData.getBeforeColumnsList().stream().map(c->c.getValue()).forEach(System.out::print);
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package com.snowy.changgou.content.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.snowy.changgou.changgou.entity.ContentCategory;
+import com.snowy.changgou.content.entity.ContentCategory;
 import com.snowy.changgou.content.mapper.ContentCategoryMapper;
 import com.snowy.changgou.content.service.ContentCategoryService;
 import org.springframework.stereotype.Service;

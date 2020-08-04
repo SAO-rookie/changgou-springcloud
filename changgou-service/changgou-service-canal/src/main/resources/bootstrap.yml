@@ -10,6 +10,9 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yml
+  redis:
+    host: 182.92.208.221
+    port: 6379
 feign:
   hystrix:
     enabled: true

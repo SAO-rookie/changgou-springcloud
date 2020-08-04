@@ -1,7 +1,8 @@
 package com.snowy.changgou.content.mapper;
 
-import com.snowy.changgou.changgou.entity.Content;
+import com.snowy.changgou.content.entity.Content;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>

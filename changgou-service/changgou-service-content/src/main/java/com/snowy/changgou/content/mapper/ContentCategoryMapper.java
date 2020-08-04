@@ -2,7 +2,7 @@ package com.snowy.changgou.content.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.snowy.changgou.changgou.entity.ContentCategory;
+import com.snowy.changgou.content.entity.ContentCategory;
 
 /**
  * <p>

@@ -2,7 +2,7 @@ package com.snowy.changgou.content.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.snowy.changgou.changgou.entity.ContentCategory;
+import com.snowy.changgou.content.entity.ContentCategory;
 
 /**
  * <p>
