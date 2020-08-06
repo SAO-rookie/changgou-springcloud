@@ -9,23 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>changgou-service-content</artifactId>
+    <artifactId>changgou-service-search</artifactId>
 
     <dependencies>
+        <!--依赖search api-->
         <dependency>
             <groupId>com.snowy</groupId>
-            <artifactId>changgou-service-content-api</artifactId>
+            <artifactId>changgou-service-search-api</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.snowy</groupId>
-            <artifactId>changgou-commom-db</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <!-- redis-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 </project>
