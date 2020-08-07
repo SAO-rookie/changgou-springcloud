@@ -15,9 +15,10 @@ import java.util.List;
 @FeignClient(name = "changgou-goods")
 @RequestMapping("/sku")
 public interface SkuFeign {
+
     @GetMapping("/status/{status}")
     List<Sku> findByStatus(@PathVariable int status);
 
     @GetMapping("/{id}")
-     Sku findById(@PathVariable String id);
+    Sku findById(@PathVariable String id);
 }

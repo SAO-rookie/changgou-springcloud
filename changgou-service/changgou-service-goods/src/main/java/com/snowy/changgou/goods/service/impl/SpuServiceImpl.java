@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +77,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu> implements SpuSe
             s.setId(String.valueOf(idWorker.nextId()));
             s.setName(name);
             s.setSpuId(spu.getId());
-            s.setCreateTime(LocalDateTime.now());
-            s.setUpdateTime(LocalDateTime.now());
+            s.setCreateTime(new Date());
+            s.setUpdateTime(new Date());
             s.setCategoryId(spu.getCategory3Id());
             s.setCategoryName(category.getName());
             s.setBrandName(brand.getName());

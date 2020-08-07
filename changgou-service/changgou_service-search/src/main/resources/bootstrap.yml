@@ -1,0 +1,30 @@
+server:
+  port: 8500
+spring:
+  application:
+    name: changgou-search
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: 127.0.0.1:9300
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+feign:
+  hystrix:
+    enabled: true
+#超时配置
+ribbon:
+  ReadTimeout: 30000000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100000000
