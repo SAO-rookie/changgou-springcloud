@@ -10,6 +10,7 @@ import com.snowy.changgou.search.mapper.SkuEsMapper;
 import com.snowy.changgou.search.service.SkuESService;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.sort.SortBuilder;
@@ -111,7 +112,7 @@ public class SkuESServiceImp implements SkuESService {
         // 构建排序查询
         if (StrUtil.isNotEmpty(searchMap.get("sortRule"))&& StrUtil.isNotEmpty(searchMap.get("sortField"))){
             boolean sortRule = "DESC".equals(searchMap.get("sortRule"));
-           nativeSearchQueryBuilder.withSort(SortBuilders
+            nativeSearchQueryBuilder.withSort(SortBuilders
                     .fieldSort(searchMap.get("sortField"))
                     .order(sortRule ? SortOrder.DESC : SortOrder.ASC));
         }
@@ -120,35 +121,31 @@ public class SkuESServiceImp implements SkuESService {
         //5.执行查询
         AggregatedPage<SkuInfo> skuPage = esTemplate.queryForPage(query, SkuInfo.class);
         //6.返回结果
-        //获取分组结果  商品分类
-        StringTerms stringTermsCategory = (StringTerms)skuPage.getAggregation("skuCategorygroup");
-        //获取分组结果  商品品牌
-        StringTerms stringTermsBrand = (StringTerms) skuPage.getAggregation("skuBrandgroup");
-        //获取分组结果  商品品牌
-        StringTerms stringTermsSpec = (StringTerms) skuPage.getAggregation("skuSpecgroup");
-
         Map resultMap = new HashMap<>();
         resultMap.put("rows", skuPage.getContent());
         resultMap.put("total", skuPage.getTotalElements());
         resultMap.put("totalPages", skuPage.getTotalPages());
-        resultMap.put("categoryList", dataProcessing(stringTermsCategory));
-        resultMap.put("brandList", dataProcessing(stringTermsBrand));
-        resultMap.put("specMap", getStringSetMap(stringTermsSpec));
+        resultMap.put("categoryList", dataProcessing(skuPage,"skuCategorygroup"));
+        resultMap.put("brandList", dataProcessing(skuPage,"skuBrandgroup"));
+        resultMap.put("specMap", getStringSetMap(skuPage,"skuSpecgroup"));
         return resultMap;
     }
 
+
     // 商品分类数据处理
-    private List<String>  dataProcessing(StringTerms stringTerms){
-      return  Optional.ofNullable(stringTerms)
-              .map(s -> s.getBuckets()
-                      .stream()
-                      .map(StringTerms.Bucket::getKeyAsString)
-                      .collect(Collectors.toList()))
-              .orElse(Collections.emptyList());
+    private List<String>  dataProcessing(AggregatedPage<SkuInfo> skuInfos,String str){
+        StringTerms stringTerms = (StringTerms)skuInfos.getAggregation(str);
+        return  Optional.ofNullable(stringTerms)
+                .map(s -> s.getBuckets()
+                        .stream()
+                        .map(StringTerms.Bucket::getKeyAsString)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 
-    private Map<String, Set<String>> getStringSetMap(StringTerms stringTerms){
-        Map<String, Set<String>> specMap = new HashMap<String, Set<String>>();
+    private Map<String, Set<String>> getStringSetMap(AggregatedPage<SkuInfo> skuInfos,String str){
+        StringTerms stringTerms = (StringTerms)skuInfos.getAggregation(str);
+        Map<String, Set<String>> specMap = new HashMap<>();
         Set<String> specList = Optional.ofNullable(stringTerms)
                 .map(s -> s.getBuckets()
                         .stream()
