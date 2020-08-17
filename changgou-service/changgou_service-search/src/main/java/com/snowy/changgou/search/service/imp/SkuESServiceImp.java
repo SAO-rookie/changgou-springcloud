@@ -1,5 +1,6 @@
 package com.snowy.changgou.search.service.imp;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.snowy.changgou.goods.entity.Sku;
@@ -7,10 +8,15 @@ import com.snowy.changgou.goods.feign.SkuFeign;
 import com.snowy.changgou.search.entity.SkuInfo;
 import com.snowy.changgou.search.mapper.SkuEsMapper;
 import com.snowy.changgou.search.service.SkuESService;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
@@ -47,12 +53,15 @@ public class SkuESServiceImp implements SkuESService {
 
     @Override
     public Map search(Map<String, String> searchMap) {
-        String  keywords = Optional.ofNullable(searchMap.get("keywords")).orElse("华为");
+
         //2.创建查询对象 的构建对象
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
         //3.设置查询的条件
         // 所有字段匹配
-        nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("name", keywords));
+        Optional.ofNullable(searchMap.get("keywords")).ifPresent(s->
+                nativeSearchQueryBuilder.withQuery(QueryBuilders.matchQuery("name", s))
+        );
+        ;
         //设置分组条件  商品分类
         nativeSearchQueryBuilder.addAggregation(AggregationBuilders
                 .terms("skuCategorygroup")
@@ -68,6 +77,44 @@ public class SkuESServiceImp implements SkuESService {
                 .terms("skuSpecgroup")
                 .field("spec.keyword")
                 .size(100));
+
+
+        // 设置主关键字查询
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        // 品牌过滤
+        Optional.ofNullable(searchMap.get("brand")).ifPresent(b-> boolQueryBuilder.filter(QueryBuilders.termQuery("brandName", b)));
+        // 分类过滤
+        Optional.ofNullable(searchMap.get("category")).ifPresent(c->boolQueryBuilder.filter(QueryBuilders.termQuery("categoryName",c)));
+        // 规格参数过滤
+        Optional.ofNullable(searchMap).ifPresent(s->{
+            s.keySet()
+                    .stream()
+                    .filter(a->a.startsWith("spec_"))
+                    .forEach(b-> boolQueryBuilder.filter(QueryBuilders.termQuery("specMap"+b.substring(5)+".keyword",searchMap.get(b))));
+        });
+
+        Optional.ofNullable(searchMap.get("price")).ifPresent(s -> {
+            String[] split = s.split("-");
+            if (!"*".equalsIgnoreCase(split[1])) {
+                boolQueryBuilder.filter(QueryBuilders.rangeQuery("price").from(split[0], true).to(split[1], true));
+            } else {
+                boolQueryBuilder.filter(QueryBuilders.rangeQuery("price").gte(split[0]));
+            }
+        });
+
+        //构建过滤查询
+        nativeSearchQueryBuilder.withFilter(boolQueryBuilder);
+        //构建分页查询
+        int pageNum = Integer.parseInt(Optional.ofNullable(searchMap.get("pageNum")).orElse("1"));
+        Integer pageSize = 3;
+        nativeSearchQueryBuilder.withPageable(PageRequest.of( pageNum - 1, pageSize));
+        // 构建排序查询
+        if (StrUtil.isNotEmpty(searchMap.get("sortRule"))&& StrUtil.isNotEmpty(searchMap.get("sortField"))){
+            boolean sortRule = "DESC".equals(searchMap.get("sortRule"));
+           nativeSearchQueryBuilder.withSort(SortBuilders
+                    .fieldSort(searchMap.get("sortField"))
+                    .order(sortRule ? SortOrder.DESC : SortOrder.ASC));
+        }
         //4.构建查询对象
         NativeSearchQuery query = nativeSearchQueryBuilder.build();
         //5.执行查询
