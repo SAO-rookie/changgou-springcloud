@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: changgou-web-gateway
+  redis:
+    host: 182.92.208.221
   cloud:
     nacos:
       discovery:
@@ -13,9 +15,16 @@ spring:
     gateway:
       routes:
         - id: changgou-goods-route
-          uri: http://www.baidu.com
+          uri: lb://changgou-goods
           predicates:
-            - Path=/brand/**
+            - Path=/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter #请求数限流 名字不能随便写 ，使用默认的facatory
+              args:
+                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 1
       globalcors:
         cors-configurations:
           '[/**]': # 匹配所有请求

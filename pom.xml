@@ -50,6 +50,10 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <!--测试包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
