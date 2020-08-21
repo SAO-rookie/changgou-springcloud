@@ -21,11 +21,7 @@ public class KeyResolverConfig {
      */
     @Bean(name="ipKeyResolver")
     public KeyResolver userKeyResolver(){
-        return e->{
-            String hostAddress = e.getRequest().getRemoteAddress().getAddress().getHostAddress();
-            log.info(hostAddress);
-            return Mono.just(hostAddress);
-        };
+        return e-> Mono.just(e.getRequest().getRemoteAddress().getAddress().getHostAddress());
     }
 
 
