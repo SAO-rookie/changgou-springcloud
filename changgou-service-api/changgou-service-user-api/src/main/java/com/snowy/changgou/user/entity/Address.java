@@ -1,8 +1,11 @@
 package com.snowy.changgou.user.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
+
+import java.io.Serializable;
 
 /**
  * @author 雪域人
@@ -11,7 +14,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class Address {
+public class Address implements Serializable {
 
     private Integer id;
 

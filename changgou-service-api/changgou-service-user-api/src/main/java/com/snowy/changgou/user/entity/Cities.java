@@ -4,6 +4,8 @@ package com.snowy.changgou.user.entity;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @author 雪域人
  * @date 2020-08-21 21:25:30
@@ -11,7 +13,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class Cities {
+public class Cities implements Serializable {
 
     // 城市ID
     private String cityid;

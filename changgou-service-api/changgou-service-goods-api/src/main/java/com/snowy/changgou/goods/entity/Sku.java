@@ -17,8 +17,9 @@ import java.util.Date;
  * @author DmZ
  * @since 2020-07-14
  */
-@TableName("tb_sku")
+
 @Data
+@TableName("tb_sku")
 public class Sku implements Serializable {
 
     private static final long serialVersionUID=1L;

@@ -1,8 +1,11 @@
 package com.snowy.changgou.user.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +14,8 @@ import java.util.Date;
  */
 @Data
 @ToString
-public class User {
+@TableName("tb_user")
+public class User implements Serializable {
 
     // 用户名
     private String username;
