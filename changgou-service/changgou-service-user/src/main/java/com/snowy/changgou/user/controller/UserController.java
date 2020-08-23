@@ -44,6 +44,11 @@ public class UserController {
             return  Result.failed("账号或者密码错误！");
         }
     }
+
+    @PostMapping("/getUserByUsername")
+    public User getUserByUsername(String username){
+        return userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
+    }
     @GetMapping("/findAllHeader")
     public Result findAllHeader(HttpServletRequest request){
         //Claims claims = Optional.ofNullable(request.getHeader("Authorization")).map(a -> JwtUtil.decryptToken(a)).orElse(null);

@@ -1,18 +1,14 @@
 package com.snowy.changgou.gateweyone.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.snowy.changgou.gateweyone.tool.JwtUtil;
-import io.jsonwebtoken.Claims;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
