@@ -1,17 +1,25 @@
 package com.snowy.changgou.user.controller;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.snowy.changgou.content.tool.BCrypt;
 import com.snowy.changgou.content.tool.Result;
 import com.snowy.changgou.user.entity.User;
 import com.snowy.changgou.user.service.UserService;
+import com.snowy.changgou.user.tool.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -25,16 +33,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public Result getUser(String username,String password){
-        User user = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
-        boolean present = Optional.ofNullable(user)
-                .filter(u -> BCrypt.checkpw(password, u.getPassword()))
-                .isPresent();
-        if (present){
-            return Result.ok(user,"登录成功!");
+    @GetMapping("/login")
+    public Result getUser(String username, String password, HttpServletResponse response){
+        String jwt = userService.getUser(username, password);
+        if (StrUtil.isNotEmpty(jwt)){
+            response.addCookie(new Cookie("Authorization",jwt));
+            return Result.ok(jwt,"登录成功!");
         }else {
-            return Result.failed("账号或者密码错误！");
+            return  Result.failed("账号或者密码错误！");
         }
     }
+    @GetMapping("/findAllHeader")
+    public Result findAllHeader(HttpServletRequest request){
+        Claims claims = Optional.ofNullable(request.getHeader("Authorization")).map(a -> JwtUtil.decryptToken(a)).orElse(null);
+        System.out.println(claims);
+        return Result.ok(claims,"登录成功!");
+    }
+
 }

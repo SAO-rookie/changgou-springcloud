@@ -8,4 +8,5 @@ import com.snowy.changgou.user.entity.User;
  * @date 2020/8/21 21:50
  */
 public interface UserService extends IService<User> {
+    String getUser(String username,String password);
 }

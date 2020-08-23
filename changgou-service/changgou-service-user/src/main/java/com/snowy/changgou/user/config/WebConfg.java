@@ -1,5 +1,6 @@
 package com.snowy.changgou.user.config;
 
+import com.snowy.changgou.content.tool.BCrypt;
 import org.springframework.context.annotation.Configuration;
 
 /**

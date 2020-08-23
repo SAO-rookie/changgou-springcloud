@@ -14,6 +14,13 @@ spring:
         file-extension: yml
     gateway:
       routes:
+        - id: changgou-user-route
+          uri: lb://changgou-user
+          predicates:
+            - Path=/api/user/**,/api/findAllHeader/**
+          filters:
+            - StripPrefix=1
+#        商品微服务路由
         - id: changgou-goods-route
           uri: lb://changgou-goods
           predicates:
