@@ -5,6 +5,8 @@ import com.snowy.changgou.gateweyone.tool.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ import java.util.Optional;
  * @author snowy
  * @date 2020/8/22 22:38
  */
-@Component
+@Configuration
 public class AuthorizeFilter implements GlobalFilter, Ordered {
     //令牌头名字
     private static final String AUTHORIZE_TOKEN = "Authorization";
@@ -33,7 +35,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         // 获取请求的URI
         String path = request.getURI().getPath();
         // 如果是登录、goods等开放的微服务[这里的goods部分开放],则直接放行,这里不做完整演示，完整演示需要设计一套权限系统
-        if (path.startsWith("/api/user")){
+        if (path.startsWith("/api/user/login")){
             return chain.filter(exchange);
         }
         // 获取头文件中的令牌信息
@@ -54,14 +56,15 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             return response.setComplete();
         }
         //解析令牌数据
-        try {
+        /*try {
             JwtUtil.decryptToken(token);
-            request.mutate().header(AUTHORIZE_TOKEN,token);
         }catch (Exception e){
             e.printStackTrace();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
-        }
+        }*/
+        // 将令牌放在请求头中
+        request.mutate().header(AUTHORIZE_TOKEN,token);
         //放行
         return chain.filter(exchange);
     }

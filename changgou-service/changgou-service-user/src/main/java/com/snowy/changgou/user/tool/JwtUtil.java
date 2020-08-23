@@ -1,8 +1,5 @@
 package com.snowy.changgou.user.tool;
 
-import com.alibaba.fastjson.JSONObject;
-import com.snowy.changgou.user.entity.User;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

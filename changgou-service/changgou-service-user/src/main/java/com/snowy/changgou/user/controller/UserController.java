@@ -38,6 +38,7 @@ public class UserController {
         String jwt = userService.getUser(username, password);
         if (StrUtil.isNotEmpty(jwt)){
             response.addCookie(new Cookie("Authorization",jwt));
+            response.setHeader("Authorization",jwt);
             return Result.ok(jwt,"登录成功!");
         }else {
             return  Result.failed("账号或者密码错误！");
@@ -45,9 +46,10 @@ public class UserController {
     }
     @GetMapping("/findAllHeader")
     public Result findAllHeader(HttpServletRequest request){
-        Claims claims = Optional.ofNullable(request.getHeader("Authorization")).map(a -> JwtUtil.decryptToken(a)).orElse(null);
-        System.out.println(claims);
-        return Result.ok(claims,"登录成功!");
+        //Claims claims = Optional.ofNullable(request.getHeader("Authorization")).map(a -> JwtUtil.decryptToken(a)).orElse(null);
+        String authorization = request.getHeader("Authorization");
+        System.out.println(authorization);
+        return Result.ok(authorization,"登录成功!");
     }
 
 }
