@@ -16,6 +16,7 @@
         <module>changgou-service-content</module>
         <module>changgou_service-search</module>
         <module>changgou-service-user</module>
+        <module>changgou-service-Oauth</module>
     </modules>
     <packaging>pom</packaging>
     <artifactId>changgou-service</artifactId>

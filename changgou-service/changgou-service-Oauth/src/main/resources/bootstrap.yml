@@ -1,0 +1,33 @@
+server:
+  port: 9200
+spring:
+  application:
+    name: changgou-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+  redis:
+    host: 182.92.208.221
+    port: 6379
+  datasource:
+    url: jdbc:mysql://182.92.208.221:3306/changgou_user?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+auth:
+  ttl: 3600  #token存储到redis的过期时间
+  clientId: changgou
+  clientSecret: changgou
+  cookieDomain: localhost
+  cookieMaxAge: -1
+encrypt:
+  key-store:
+    location: classpath:/changgou.jks
+    secret: changgou
+    alias: changgou
+    password: changgou
