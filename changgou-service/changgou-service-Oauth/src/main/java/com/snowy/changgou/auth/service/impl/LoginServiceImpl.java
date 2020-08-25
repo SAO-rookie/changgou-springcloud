@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Base64;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 描述
@@ -39,7 +40,8 @@ public class LoginServiceImpl implements LoginService {
 
         //1.定义url (申请令牌的url)
         //参数 : 微服务的名称spring.appplication指定的名称
-        ServiceInstance choose = loadBalancerClient.choose("user-auth");
+        ServiceInstance choose = loadBalancerClient.choose("changgou-auth");
+        Optional.ofNullable(choose).orElseThrow(()->new RuntimeException("找不到对应的服务"));
         String url =choose.getUri().toString()+"/oauth/token";
 
         //2.定义头信息 (有client id 和client secr)

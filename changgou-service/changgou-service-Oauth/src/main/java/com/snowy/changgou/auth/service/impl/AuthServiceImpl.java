@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 /*****
  * @Author: www.itheima
@@ -63,10 +64,9 @@ public class AuthServiceImpl implements AuthService {
      */
     private AuthToken applyToken(String username, String password, String clientId, String clientSecret) {
         //选中认证服务的地址
-        ServiceInstance serviceInstance = loadBalancerClient.choose("user-auth");
-        if (serviceInstance == null) {
-            throw new RuntimeException("找不到对应的服务");
-        }
+        ServiceInstance serviceInstance = loadBalancerClient.choose("changgou-auth");
+        Optional.ofNullable(serviceInstance).orElseThrow(()->new RuntimeException("找不到对应的服务"));
+
         //获取令牌的url
         String path = serviceInstance.getUri().toString() + "/oauth/token";
         //定义body
