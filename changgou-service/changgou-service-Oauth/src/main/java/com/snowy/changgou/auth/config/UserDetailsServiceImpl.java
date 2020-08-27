@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //没有认证统一采用httpbasic认证，httpbasic中存储了client_id和client_secret，开始认证client_id和client_secret
         if(authentication==null){
             ClientDetails clientDetails = clientDetailsService.loadClientByClientId(username);
-            if(clientDetails!=null){
+            if(clientDetails != null){
                 //秘钥
                 String clientSecret = clientDetails.getClientSecret();
                 //静态方式
