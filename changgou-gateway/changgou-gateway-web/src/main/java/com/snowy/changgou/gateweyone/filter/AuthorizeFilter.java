@@ -60,7 +60,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             return response.setComplete();
         }*/
         // 将令牌放在请求头中
-        request.mutate().header(AUTHORIZE_TOKEN,token);
+        request.mutate().header(AUTHORIZE_TOKEN,"bearer "+token);
         //放行
         return chain.filter(exchange);
     }

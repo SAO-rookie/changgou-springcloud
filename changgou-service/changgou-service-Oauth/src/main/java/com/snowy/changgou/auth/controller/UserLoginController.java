@@ -58,8 +58,6 @@ public class UserLoginController {
     public Result login(String username, String password) {
         //登录 之后生成令牌的数据返回
         AuthToken authToken = loginService.login(username, password, clientId, clientSecret, GRAND_TYPE);
-
-
         //设置到cookie中
         saveCookie(authToken.getAccessToken());
         return  Result.ok(authToken,"令牌生成成功");

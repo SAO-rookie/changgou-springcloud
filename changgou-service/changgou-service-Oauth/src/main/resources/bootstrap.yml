@@ -14,7 +14,7 @@ spring:
     host: 182.92.208.221
     port: 6379
   datasource:
-    url: jdbc:mysql://182.92.208.221:3306/changgou_user?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://182.92.208.221:3306/changgou_oauth?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: admin123
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -13,6 +13,7 @@ import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -50,6 +51,7 @@ public class UserController {
         return userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
     }
     @GetMapping("/findAllHeader")
+    @PreAuthorize("hasAnyAuthority('user')")
     public Result findAllHeader(HttpServletRequest request){
         //Claims claims = Optional.ofNullable(request.getHeader("Authorization")).map(a -> JwtUtil.decryptToken(a)).orElse(null);
         String authorization = request.getHeader("Authorization");
