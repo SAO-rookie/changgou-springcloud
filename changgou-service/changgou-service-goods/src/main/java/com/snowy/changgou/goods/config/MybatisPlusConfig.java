@@ -2,6 +2,7 @@ package com.snowy.changgou.goods.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
+import com.snowy.changgou.content.tool.FeignInterceptor;
 import com.snowy.changgou.content.tool.IdWorker;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -31,5 +32,14 @@ public class MybatisPlusConfig {
     @Bean
     public IdWorker idWorker(){
         return new IdWorker();
+    }
+
+    /***
+     * 创建拦截器Bean对象
+     * @return
+     */
+    @Bean
+    public FeignInterceptor feignInterceptor(){
+        return new FeignInterceptor();
     }
 }

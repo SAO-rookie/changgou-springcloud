@@ -1,0 +1,36 @@
+server:
+  port: 8700
+spring:
+  application:
+    name: changgou-order
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+  datasource:
+    url: jdbc:mysql://182.92.208.221:3306/changgou_order?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 182.92.208.221
+    port: 6379
+    database: 0
+  main:
+    allow-bean-definition-overriding: true
+feign:
+  hystrix:
+    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+          strategy: SEMAPHORE

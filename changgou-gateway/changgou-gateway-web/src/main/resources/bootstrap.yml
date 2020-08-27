@@ -14,17 +14,25 @@ spring:
         file-extension: yml
     gateway:
       routes:
+#        用户微服务路由
         - id: changgou-user-route
           uri: lb://changgou-user
           predicates:
-            - Path=/api/user/**,/api/findAllHeader/**
+            - Path=/api/user/**
           filters:
             - StripPrefix=1
+#        订单微服务路由
+        - id: changgou-order-route
+          uri: lb://changgou-order
+          predicates:
+             - Path=/api/cart/**
+          filters:
+             - StripPrefix=1
 #        商品微服务路由
         - id: changgou-goods-route
           uri: lb://changgou-goods
           predicates:
-            - Path=/**
+            - Path=/api/spu/**,/api/sku/**
           filters:
             - StripPrefix=1
             - name: RequestRateLimiter #请求数限流 名字不能随便写 ，使用默认的facatory

@@ -41,7 +41,10 @@ public class SpuController {
         return Result.ok(spuService.saveGoods(goods));
     }
 
-
+    @GetMapping("/{id}")
+    public Spu getSpuById(@PathVariable String id){
+       return   spuService.getById(id);
+    }
     /**
      * 根据spuId查询商品
      * @Author: snowy

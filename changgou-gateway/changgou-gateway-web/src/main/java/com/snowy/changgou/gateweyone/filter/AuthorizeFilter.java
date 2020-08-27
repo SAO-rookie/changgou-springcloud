@@ -31,7 +31,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         // 获取请求的URI
         String path = request.getURI().getPath();
         // 如果是登录、goods等开放的微服务[这里的goods部分开放],则直接放行,这里不做完整演示，完整演示需要设计一套权限系统
-        if (path.startsWith("/api/user/login")){
+        if (URLFilter.hasAuthorize(path)){
             return chain.filter(exchange);
         }
         // 获取头文件中的令牌信息
