@@ -1,4 +1,6 @@
 package com.snowy.changgou.goods.mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.snowy.changgou.goods.entity.Sku;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -12,5 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-07-14
  */
 public interface SkuMapper extends BaseMapper<Sku> {
+    int updateById(@Param("skuId")String skuId,@Param("num") Integer num);
+
 
 }

@@ -1,6 +1,8 @@
 package com.snowy.changgou.user.config;
 
 import com.snowy.changgou.content.tool.BCrypt;
+import com.snowy.changgou.content.tool.TokenDecode;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,4 +11,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class WebConfg {
+    @Bean
+    public TokenDecode tokenDecode(){
+        return new TokenDecode();
+    }
 }

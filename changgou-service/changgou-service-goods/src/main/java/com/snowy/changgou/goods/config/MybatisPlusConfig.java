@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import com.snowy.changgou.content.tool.FeignInterceptor;
 import com.snowy.changgou.content.tool.IdWorker;
+import com.snowy.changgou.content.tool.TokenDecode;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,10 @@ public class MybatisPlusConfig {
         return new IdWorker();
     }
 
+    @Bean
+    public TokenDecode tokenDecode(){
+        return new TokenDecode();
+    }
     /***
      * 创建拦截器Bean对象
      * @return

@@ -24,7 +24,7 @@ import java.util.Map;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/oauth")
 public class UserLoginController {
 
     @Autowired

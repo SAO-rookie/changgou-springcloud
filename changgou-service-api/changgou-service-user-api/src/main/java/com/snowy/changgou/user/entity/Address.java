@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @ToString
+@TableName(value = "tb_address")
 public class Address implements Serializable {
 
     private Integer id;

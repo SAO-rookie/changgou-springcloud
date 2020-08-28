@@ -18,6 +18,9 @@ spring:
      password: admin123
      driver-class-name: com.mysql.cj.jdbc.Driver
      type: com.alibaba.druid.pool.DruidDataSource
+   redis:
+      host: 182.92.208.221
+      port: 6379
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
@@ -25,3 +28,12 @@ mybatis-plus:
 feign:
   hystrix:
     enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+          strategy: SEMAPHORE

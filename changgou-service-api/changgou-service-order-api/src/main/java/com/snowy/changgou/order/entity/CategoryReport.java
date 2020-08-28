@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
 @Data
 @ToString
 @TableName("tb_category_report")
-public class CategoryReport {
+public class CategoryReport implements Serializable {
 
     // 1级分类
     private Integer categoryId1;

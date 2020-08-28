@@ -18,16 +18,23 @@ spring:
         - id: changgou-user-route
           uri: lb://changgou-user
           predicates:
-            - Path=/api/user/**
+            - Path=/api/user/**,/api/address/**,
           filters:
             - StripPrefix=1
 #        订单微服务路由
         - id: changgou-order-route
           uri: lb://changgou-order
           predicates:
-             - Path=/api/cart/**
+             - Path=/api/cart/**,/api/order/**
           filters:
              - StripPrefix=1
+#        订单微服务路由
+        - id: changgou-auth-route
+          uri: lb://changgou-auth
+          predicates:
+            - Path=/api/oauth/**
+          filters:
+            - StripPrefix=1
 #        商品微服务路由
         - id: changgou-goods-route
           uri: lb://changgou-goods

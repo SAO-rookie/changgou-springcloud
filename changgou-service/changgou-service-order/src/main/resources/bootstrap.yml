@@ -23,6 +23,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
 feign:
+  compression:
+    request:
+      min-request-size: 4096
   hystrix:
     enabled: true
 #hystrix 配置

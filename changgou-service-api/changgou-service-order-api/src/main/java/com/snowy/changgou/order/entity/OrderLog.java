@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Date;
 @Data
 @ToString
 @TableName("tb_order_log")
-public class OrderLog {
+public class OrderLog implements Serializable {
 
     // ID
     @TableId(type = IdType.INPUT)

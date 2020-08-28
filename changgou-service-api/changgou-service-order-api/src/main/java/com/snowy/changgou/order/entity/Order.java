@@ -1,12 +1,15 @@
 package com.snowy.changgou.order.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 雪域人
@@ -16,7 +19,7 @@ import java.util.Date;
 @Data
 @ToString
 @TableName("tb_order")
-public class Order {
+public class Order implements Serializable {
 
     // 订单id
     @TableId(type = IdType.INPUT)
@@ -99,5 +102,8 @@ public class Order {
 
     // 是否删除
     private String isDelete;
+
+    @TableField(exist = false)
+    private List<String> skuIds;
 
 }

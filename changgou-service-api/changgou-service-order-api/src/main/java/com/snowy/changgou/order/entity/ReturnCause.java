@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @author 雪域人
  * @date 2020-08-27 17:26:14
@@ -14,7 +16,7 @@ import lombok.ToString;
 @Data
 @ToString
 @TableName("tb_return_cause")
-public class ReturnCause {
+public class ReturnCause implements Serializable {
 
     // ID
     @TableId

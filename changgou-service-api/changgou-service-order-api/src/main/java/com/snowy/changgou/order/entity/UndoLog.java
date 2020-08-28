@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
 @Data
 @ToString
 @TableName("undo_log")
-public class UndoLog {
+public class UndoLog implements Serializable {
     @TableId
     private Long id;
 
