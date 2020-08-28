@@ -44,7 +44,6 @@ public class CartServiceImp implements CartService {
         Sku sku = skuFeign.findById(id);
         Optional.ofNullable(sku).ifPresent(s->{
             OrderItem item = sku2OrderItem(sku, num);
-            System.out.println(item);
             redisTemplate.boundHashOps("Cart_"+username).put(id,item);
         });
     }

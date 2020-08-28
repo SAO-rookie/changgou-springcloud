@@ -4,10 +4,7 @@ import com.snowy.changgou.content.tool.Result;
 import com.snowy.changgou.order.entity.Order;
 import com.snowy.changgou.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author snowy
@@ -28,7 +25,7 @@ public class OrderController {
      * @Return: com.snowy.changgou.content.tool.Result
      **/
     @PostMapping
-    public Result save(Order order){
+    public Result save(@RequestBody Order order){
         return Result.ok(orderService.saveOrder(order));
     }
 }

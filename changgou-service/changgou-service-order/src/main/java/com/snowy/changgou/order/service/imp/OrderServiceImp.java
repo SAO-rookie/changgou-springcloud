@@ -8,15 +8,12 @@ import com.snowy.changgou.order.entity.Order;
 import com.snowy.changgou.order.entity.OrderItem;
 import com.snowy.changgou.order.mapper.OrderItemMapper;
 import com.snowy.changgou.order.mapper.OrderMapper;
-import com.snowy.changgou.order.service.CartService;
 import com.snowy.changgou.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author snowy
@@ -31,8 +28,6 @@ public class OrderServiceImp extends ServiceImpl<OrderMapper, Order> implements 
     @Autowired
     private TokenDecode tokenDecode;
     @Autowired
-    private CartService cartService;
-    @Autowired
     private IdWorker idWorker;
     @Autowired
     private RedisTemplate redisTemplate;
@@ -40,8 +35,15 @@ public class OrderServiceImp extends ServiceImpl<OrderMapper, Order> implements 
     private SkuFeign skuFeign;
     @Override
     public boolean saveOrder(Order order) {
+        String username = tokenDecode.getUserInfo().get("username");
         //查询出用户的所有购物车
-        List<OrderItem> orderItems = cartService.list();
+        /*List<String> skuIds1 = order.getSkuIds();
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (String s : skuIds1){
+            OrderItem orderItem = (OrderItem)redisTemplate.boundHashOps("Cart_" + username).get(s);
+            orderItems.add(orderItem);
+        }*/
+        List<OrderItem> orderItems = order.getSkuIds().stream().map(q -> (OrderItem) redisTemplate.boundHashOps("Cart_" + username).get(q)).collect(Collectors.toList());
         //统计计算
         int totalMoney = orderItems.stream().mapToInt(OrderItem::getMoney).sum(); //总金额
         int totalPayMoney = orderItems.stream().mapToInt(OrderItem::getPayMoney).sum(); //实际支付金额
@@ -51,7 +53,7 @@ public class OrderServiceImp extends ServiceImpl<OrderMapper, Order> implements 
         order.setPayMoney(totalPayMoney);
         //其他数据完善
         order.setId(String.valueOf(idWorker.nextId()));
-        order.setUsername(tokenDecode.getUserInfo().get("username"));
+        order.setUsername(username);
         order.setCreateTime(new Date());
         order.setUpdateTime(new Date());
         order.setBuyerRate("0");        //0:未评价，1：已评价
