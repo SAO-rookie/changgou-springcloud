@@ -12,6 +12,8 @@ import com.snowy.changgou.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,12 +39,6 @@ public class OrderServiceImp extends ServiceImpl<OrderMapper, Order> implements 
     public boolean saveOrder(Order order) {
         String username = tokenDecode.getUserInfo().get("username");
         //查询出用户的所有购物车
-        /*List<String> skuIds1 = order.getSkuIds();
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (String s : skuIds1){
-            OrderItem orderItem = (OrderItem)redisTemplate.boundHashOps("Cart_" + username).get(s);
-            orderItems.add(orderItem);
-        }*/
         List<OrderItem> orderItems = order.getSkuIds().stream().map(q -> (OrderItem) redisTemplate.boundHashOps("Cart_" + username).get(q)).collect(Collectors.toList());
         //统计计算
         int totalMoney = orderItems.stream().mapToInt(OrderItem::getMoney).sum(); //总金额
@@ -64,6 +60,10 @@ public class OrderServiceImp extends ServiceImpl<OrderMapper, Order> implements 
 
         // 保存订单数据
         int insert = orderMapper.insert(order);
+        Optional.ofNullable(order)
+                .filter(o->"1".equals(o.getPayType()))
+                .ifPresent(r->redisTemplate.boundHashOps("Order").put(r.getId(),r));
+        // 处理订单明细，并且削减商品库存
         orderItems.stream().forEach(o->{
             o.setId(String.valueOf(idWorker.nextId()));
             o.setIsReturn("0");
@@ -71,9 +71,32 @@ public class OrderServiceImp extends ServiceImpl<OrderMapper, Order> implements 
             orderItemMapper.insert(o);
             skuFeign.cutBack(o.getSkuId(),o.getNum());
         });
-      //清除Redis缓存购物车数据
+       //清除Redis缓存购物车数据
         List<String> skuIds = order.getSkuIds();
         Optional.ofNullable(skuIds).ifPresent(c->c.stream().forEach(s->redisTemplate.boundHashOps("Cart_"+order.getUsername()).delete(s)));
         return insert>0;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateOrderStatus(String orderId, String transactionid) {
+        Order order = orderMapper.selectById(orderId);
+        order.setUpdateTime(new Date());    //时间也可以从微信接口返回过来，这里为了方便，我们就直接使用当前时间了
+        order.setPayTime(order.getUpdateTime());    //不允许这么写
+        order.setTransactionId(transactionid);  //交易流水号
+        order.setPayStatus("1");    //已支付
+        redisTemplate.boundHashOps("Order").delete(orderId);
+        return orderMapper.updateById(order)>0;
+    }
+
+    @Override
+    public boolean deleteOrder(String orderId) {
+        Order order = (Order) redisTemplate.boundHashOps("Order").get(orderId);
+        order.setUpdateTime(new Date());
+        order.setPayStatus("2");    //支付失败
+        orderMapper.updateById(order);
+        //删除缓存
+        Long order1 = redisTemplate.boundHashOps("Order").delete(orderId);
+        return Optional.ofNullable(order1).orElse(Long.parseLong("0"))>0;
     }
 }

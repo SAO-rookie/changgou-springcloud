@@ -1,8 +1,8 @@
 server:
-  port: 8700
+  port: 8800
 spring:
   application:
-    name: changgou-order
+    name: changgou-pay
   cloud:
     nacos:
       discovery:
@@ -10,27 +10,12 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yml
-  datasource:
-    url: jdbc:mysql://182.92.208.221:3306/changgou_order?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    type: com.alibaba.druid.pool.DruidDataSource
-    username: root
-    password: admin123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    host: 182.92.208.221
-    port: 6379
-    database: 0
   rabbitmq:
     host: 182.92.208.221
     port: 5672
     username: guest
     password: guest
-  main:
-    allow-bean-definition-overriding: true
 feign:
-  compression:
-    request:
-      min-request-size: 4096
   hystrix:
     enabled: true
 #hystrix 配置
@@ -38,10 +23,18 @@ hystrix:
   command:
     default:
       execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制
+          enabled: true
         isolation:
-          thread:
-            timeoutInMilliseconds: 10000
           strategy: SEMAPHORE
+#微信支付信息配置
+weixin:
+  appid: wx8397f8696b538317
+  partner: 1473426802
+  partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+  notifyurl: https://snowy.easy.echosite.cn/weiPay/notifyUrl
+#位置支付交换机和队列
 mq:
   pay:
     exchange:

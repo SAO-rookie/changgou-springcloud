@@ -9,4 +9,8 @@ import com.snowy.changgou.order.entity.Order;
  */
 public interface OrderService extends IService<Order> {
     boolean saveOrder(Order order);
+
+    boolean updateOrderStatus(String orderId,String transactionid);
+
+    boolean deleteOrder(String orderId);
 }
